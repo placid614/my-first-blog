@@ -10,13 +10,23 @@
 <body>
     <header class="page-header">
       <div class="container">
-    {% if user.is_authenticated %}
-        <a href="{% url 'post_new' %}" class="top-menu">
-             {% include './icons/file-earmark-plus.svg' %}
-        </a> 
-    {% endif %}
         <h1><a href="/">Django Girls Blog</a></h1>
       </div>
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <span>Hi, {{ user.username }} |</span>
+    <button type="submit" class="btn btn-primary" style="background-color: green;">Logout</button>
+</form>
+{% else %}
+    <a class='btn btn-primary' href="{% url 'login' %}" style="background-color: green;">Login</a>
+    <a class='btn btn-primary' href="{% url 'signup' %}" style="background-color: green;">Sign up</a>
+{% endif %}
+{% if user.is_authenticated %}
+        <a href="{% url 'post_new' %}" class="top-menu">
+    {% include './icons/file-earmark-plus.svg' %}
+    </a>
+{% endif %}
     </header>
     <main class="container">
         <div class="row">
